@@ -1,11 +1,12 @@
 import boto3
 import json
-methods = ['GET', 'POST', 'DELETE', 'PUT', 'PATCH']
+methods = ['ANY', 'GET', 'POST', 'DELETE', 'PUT', 'PATCH']
 
 data = dict()
 apigateway = boto3.client('apigateway')
+apis = apigateway.get_rest_apis(limit=100)
 
-for api in apigateway.get_rest_apis()['items']:
+for api in apis['items']:
     api_data = {}
     results = apigateway.get_resources(restApiId=api['id'], limit=777)
     for result in results['items']:
